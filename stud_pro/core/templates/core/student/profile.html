@@ -1,0 +1,121 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+
+<style>
+/* ===== BACKGROUND ===== */
+.profile-bg{
+    background: url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f") no-repeat center center/cover;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== PROFILE CARD ===== */
+.profile-card{
+    background: rgba(255,255,255,0.95);
+    width: 520px;
+    padding: 35px 40px;
+    border-radius: 18px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* ===== TITLE ===== */
+.profile-title{
+    font-size: 28px;
+    font-weight: 700;
+    color: #6a5af9;
+    margin-bottom: 25px;
+}
+
+/* ===== PROFILE INFO ===== */
+.profile-info{
+    margin-top: 10px;
+}
+
+.info-row{
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    font-size: 17px;
+    border-bottom: 1px solid #eee;
+}
+
+.label{
+    font-weight: 600;
+    color: #555;
+}
+
+.value{
+    font-weight: 500;
+    color: #222;
+}
+
+/* ===== COURSES ===== */
+.course-section{
+    margin-top: 35px;
+}
+
+.course-title{
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #6a5af9;
+}
+
+.course-box{
+    background: #f4f6fb;
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.no-course{
+    font-size: 16px;
+    font-weight: 500;
+    color: #777;
+    padding: 15px 0;
+}
+</style>
+
+<div class="profile-bg">
+    <div class="profile-card">
+
+        <div class="profile-title">🎓 Student Profile</div>
+
+        <!-- PROFILE DETAILS -->
+        <div class="profile-info">
+            <div class="info-row">
+                <span class="label">Username</span>
+                <span class="value">{{ user.username }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Email</span>
+                <span class="value">{{ user.email }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Role</span>
+                <span class="value">Student</span>
+            </div>
+        </div>
+
+        
+        <!-- EDIT PROFILE BUTTON -->
+        <a href="{% url 'core:edit_student_profile' %}"
+           class="btn btn-outline-primary mt-4 w-100 fw-semibold">
+           ✏️ Edit Profile
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

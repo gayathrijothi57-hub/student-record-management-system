@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Student Dashboard{% endblock %}</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6fb;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: linear-gradient(135deg, #6a5af9, #8360ff);
+            padding: 20px 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .username {
+            color: #fff;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #fff;
+            color: #6a5af9;
+            transform: translateY(-2px);
+        }
+
+        .logout {
+            background: #ff4d4d;
+        }
+
+        .logout:hover {
+            background: #fff;
+            color: #ff4d4d;
+        }
+
+        /* ===== PAGE CONTENT ===== */
+        .content {
+            padding: 40px;
+            min-height: 75vh;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #1f2937;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer i {
+            margin: 0 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+{% if request.session.username %}
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+    <div class="nav-container">
+        <div class="brand">Student Management System</div>
+
+        <div class="nav-links">
+            <div class="username">
+                👤 {{ request.session.username }}
+            </div>
+
+            {% if request.session.role == "student" %}
+                <a href="{% url 'core:student_dashboard' %}" class="nav-btn">Dashboard</a>
+                <a href="{% url 'core:enroll_course' %}" class="nav-btn">Enroll</a>
+                <a href="{% url 'core:student_profile' %}" class="nav-btn">Profile</a>
+            {% else %}
+                <a href="{% url 'core:staff_dashboard' %}" class="nav-btn">Dashboard</a>
+                <a href="{% url 'core:manage_enrollments' %}" class="nav-btn">Enrollments</a>
+                
+            {% endif %}
+
+            <a href="{% url 'core:logout' %}" class="nav-btn logout">Logout</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- ===== PAGE CONTENT ===== -->
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    © Student Management System <br><br>
+    <i class="fab fa-github"></i>
+    <i class="fab fa-linkedin"></i>
+    <i class="fas fa-envelope"></i>
+</footer>
+
+</body>
+</html>

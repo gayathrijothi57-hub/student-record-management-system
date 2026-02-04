@@ -1,0 +1,120 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Approved Enrollments | Stud Pro{% endblock %}
+
+{% block content %}
+<style>
+/* =========================
+   Approved Enrollments Page
+   ========================= */
+
+.approved-page {
+    min-height: 90vh;
+    padding: 60px;
+    background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url("{% static 'core/images/dashboard_bg.png' %}");
+    background-size: cover;
+    background-position: center;
+}
+
+/* Title */
+.page-title {
+    font-size: 34px;
+    font-weight: 800;
+    color: #22c55e;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+}
+
+/* Table */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+.styled-table thead {
+    background: linear-gradient(90deg, #16a34a, #22c55e);
+    color: white;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 18px;
+    text-align: center;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.styled-table tbody tr:hover {
+    background: #ecfdf5;
+}
+
+/* Status badge */
+.status-approved {
+    background: #dcfce7;
+    color: #14532d;
+    padding: 8px 22px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+/* Empty */
+.no-data {
+    padding: 30px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #dc2626;
+}
+</style>
+
+<div class="approved-page">
+
+    <h2 class="page-title">✅ Approved Enrollments</h2>
+
+    <div class="card">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for enroll in enrollments %}
+                <tr>
+                    <td>{{ enroll.username }}</td>
+                    <td>{{ enroll.course }}</td>
+                    <td>
+                        <span class="status-approved">Approved</span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="no-data">
+                        No Approved Enrollments Found
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

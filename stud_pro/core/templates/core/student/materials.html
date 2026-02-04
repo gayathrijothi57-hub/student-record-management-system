@@ -1,0 +1,128 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}My Course Materials | Stud Pro{% endblock %}
+
+{% block content %}
+<style>
+.materials-page{
+    min-height:90vh;
+    padding:80px 40px;
+    background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url("{% static 'core/images/dashboard_bg.png' %}");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.page-title{
+    font-size:34px;
+    font-weight:800;
+    color:#22c55e;
+    margin-bottom:40px;
+}
+
+.material-wrapper{
+    width:100%;
+    max-width:900px;
+}
+
+.material-card{
+    background:#fff;
+    border-radius:22px;
+    padding:32px 36px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.material-info h3{
+    margin:0 0 6px;
+    font-size:20px;
+    font-weight:700;
+}
+
+.material-info p{
+    margin:0;
+    font-size:15px;
+    font-weight:600;
+    color:#4b5563;
+}
+
+.material-actions{
+    display:flex;
+    gap:16px;
+}
+
+.btn-view{
+    padding:10px 26px;
+    border-radius:999px;
+    background:#22c55e;
+    color:white;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.btn-download{
+    padding:10px 26px;
+    border-radius:999px;
+    background:#2563eb;
+    color:white;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.no-material{
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    font-weight:600;
+    color:#dc2626;
+}
+</style>
+
+<div class="materials-page">
+
+    <div class="page-title">📚 My Course Materials</div>
+
+    <div class="material-wrapper">
+
+        {% if materials %}
+            {% for m in materials %}
+            <div class="material-card">
+
+                <div class="material-info">
+                    <h3>{{ m.title }}</h3>
+                    <p>Course : {{ m.course_name }}</p>
+                </div>
+
+                <div class="material-actions">
+                    <a class="btn-view"
+                       href="{{ m.file_url }}"
+                       target="_blank">
+                        View PDF
+                    </a>
+
+                    <a class="btn-download"
+                       href="{{ m.file_url }}"
+                       download>
+                        Download
+                    </a>
+                </div>
+
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-material">
+                No materials available for your courses.
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

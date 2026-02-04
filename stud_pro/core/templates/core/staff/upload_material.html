@@ -1,0 +1,185 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Upload Material | Stud Pro{% endblock %}
+
+{% block content %}
+
+<style>
+/* 🔹 Background */
+.material-bg {
+    min-height: 100vh;
+    background-image: url("{% static 'core/images/dashboard_bg.png' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 60px 20px;
+}
+
+/* 🔹 Card */
+.material-card {
+    max-width: 800px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.96);
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* 🔹 Title */
+.material-card h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* 🔹 Form */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+}
+
+/* 🔹 Buttons */
+.form-actions {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.btn-primary {
+    background: #4f46e5;
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+/* 🔹 Materials List */
+.materials-section {
+    margin-top: 40px;
+}
+
+.materials-section h3 {
+    margin-bottom: 15px;
+}
+
+.material-list {
+    list-style: none;
+    padding: 0;
+}
+
+.material-list li {
+    padding: 12px 16px;
+    background: #f9fafb;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.material-list a {
+    text-decoration: none;
+    color: #4f46e5;
+    font-weight: 500;
+}
+
+/* 🔹 Back link */
+.back-dashboard {
+    display: inline-block;
+    margin-top: 25px;
+    color: #4f46e5;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.back-dashboard:hover {
+    text-decoration: underline;
+}
+</style>
+
+<div class="material-bg">
+
+    <div class="material-card">
+
+        <h2>Upload Study Material</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Material Title</label>
+                <input type="text" name="title"
+                       placeholder="Eg: Unit 1 Notes" required>
+            </div>
+
+            <div class="form-group">
+                <label>Select Course</label>
+                <select name="course_id" required>
+                    <option value="">-- Select Course --</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Select File</label>
+                <input type="file" name="file" required>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    Upload Material
+                </button>
+            </div>
+
+        </form>
+
+        <!-- 🔹 Uploaded Materials -->
+        <div class="materials-section">
+            
+
+            {% if materials %}
+                <ul class="material-list">
+                    {% for material in materials %}
+                        <li>
+                            {{ material.title }}
+                            <a href="{{ material.file_url }}" target="_blank">
+
+                                View
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                
+            {% endif %}
+        </div>
+
+        <!-- 🔹 Back -->
+        <div style="text-align:center;">
+            <a href="{% url 'core:staff_dashboard' %}"
+               class="back-dashboard">
+                ← Back to Dashboard
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

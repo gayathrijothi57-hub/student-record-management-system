@@ -1,0 +1,152 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Enroll Course | Stud Pro{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Background */
+    .enroll-bg {
+        min-height: 80vh;
+        background: 
+            linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+            url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px;
+    }
+
+    .enroll-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 22px;
+        padding: 40px 35px;
+        width: 420px;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+        text-align: center;
+        animation: fadeUp 0.6s ease;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .enroll-card h3 {
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: #6f42c1;
+        font-size: 26px;
+    }
+
+    .input-box {
+        margin-bottom: 22px;
+        text-align: left;
+    }
+
+    .input-box label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    select {
+        width: 100%;
+        padding: 13px 15px;
+        border-radius: 12px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    select:focus {
+        border-color: #7b2ff7;
+        box-shadow: 0 0 6px rgba(123, 47, 247, 0.4);
+    }
+
+    button {
+        width: 100%;
+        padding: 13px;
+        border: none;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #7b2ff7, #9f44ff);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(123,47,247,0.4);
+    }
+
+    /* Messages */
+    .message {
+        padding: 12px 15px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        font-weight: 600;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .message.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+</style>
+
+<div class="enroll-bg">
+    <div class="enroll-card">
+
+        <h3>📚 Enroll Course</h3>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-box">
+                <label for="course">Select Course</label>
+                <select name="course_id" id="course" required>
+                    <option value="">-- Select --</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit">Enroll</button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
